@@ -34,6 +34,27 @@ npx --yes skills add https://github.com/web-casa/pkgseek-skills \
 
 The installed `pkgseek-linux` directory includes `SKILL.md`, all six files in `references/`, and `agents/openai.yaml`. Do not copy `SKILL.md` alone.
 
+### Upgrade from the former six-Skill layout
+
+Install and verify `pkgseek-linux` first. Only then remove the six retired Skill directories from the same scope and Agent:
+
+```bash
+npx --yes skills add https://github.com/web-casa/pkgseek-skills \
+  --skill pkgseek-linux --global --agent codex --yes
+npx skills ls --global --agent codex
+
+npx --yes skills remove \
+  audit-linux-vulnerabilities \
+  debug-elf-abi \
+  fix-linux-build-error \
+  migrate-linux-distribution \
+  port-linux-command \
+  review-linux-container \
+  --global --agent codex --yes
+```
+
+For a project-scoped installation, omit `--global` from all three commands. The removal step deletes only the retired standalone copies; their workflows remain available through `pkgseek-linux/references/`.
+
 ## Give this prompt to an AI Agent
 
 Copy the complete prompt below into Codex, Claude Code, Cursor, or another shell-capable Agent:
@@ -160,6 +181,8 @@ npx skills add https://github.com/web-casa/pkgseek-skills --skill pkgseek-linux
 ```
 
 安装时必须保留完整的 `pkgseek-linux` 目录，不能只复制 `SKILL.md`。产品说明和在线示例位于 [pkgseek.com/zh-CN/skills](https://pkgseek.com/zh-CN/skills)。PkgSeek 由 [aat.ee](https://aat.ee) 与 [webc.casa](https://webc.casa) 联合出品。
+
+如果已经安装旧版的六个独立 Skill，请先安装并通过 `npx skills ls` 确认 `pkgseek-linux` 可见，再清理旧目录；不要在验证新版之前卸载旧版。
 
 ## License
 
