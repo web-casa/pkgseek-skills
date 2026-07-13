@@ -1,8 +1,3 @@
----
-name: port-linux-command
-description: Port shell commands across GNU, BSD, BusyBox, Alpine, Debian, RPM, macOS, and minimal container environments. Use when flags differ, commands are missing, package names change, or a script must remain portable.
----
-
 # Port Linux Commands
 
 Preserve intent while adapting syntax, implementation, and package availability.
@@ -22,5 +17,3 @@ Preserve intent while adapting syntax, implementation, and package availability.
 - Distinguish shell builtins from external executables.
 - Never execute the supplied command or interpolate user-controlled values into a shell.
 - Ask for confirmation before suggesting a destructive command such as recursive deletion, disk writes, firewall changes, or service restarts.
-
-Use `https://api.pkgseek.com` as a REST fallback only when PkgSeek MCP is unavailable.

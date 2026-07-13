@@ -1,8 +1,3 @@
----
-name: migrate-linux-distribution
-description: Plan package-aware migrations between Linux distributions or releases. Use for OS upgrades, base-image changes, Debian-to-RPM moves, fleet modernization, package inventory mapping, compatibility gaps, and end-of-life migration decisions.
----
-
 # Migrate Linux Distributions
 
 Build a reviewable migration plan from indexed package and lifecycle facts.
@@ -16,11 +11,9 @@ Build a reviewable migration plan from indexed package and lifecycle facts.
 5. For critical packages, call `get_package`, `compare_package_versions`, and `get_package_history` to inspect dependencies and regressions.
 6. Return phases: prerequisites, repository changes, package mapping, configuration migration, verification, rollout, and rollback.
 
-## Decision Rules
+## Decision rules
 
 - Treat exact target-release repository evidence as fact; label name similarity as a candidate.
 - Separate distribution packages from language packages, vendored artifacts, and locally built software.
 - Flag major-version changes, package splits/merges, service-name changes, and missing security support.
 - Do not output a destructive one-shot migration script. Commands must be individually reviewable and require confirmation before execution.
-
-Use `https://api.pkgseek.com` as a REST fallback only when PkgSeek MCP is unavailable.

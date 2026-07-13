@@ -1,8 +1,3 @@
----
-name: review-linux-container
-description: Review Dockerfiles and Linux container builds for base-image lifecycle, package availability, repository freshness, reproducibility, and distribution-specific security risk. Use for container PR reviews and modernization planning.
----
-
 # Review Linux Containers
 
 Review container package decisions without building or running untrusted images.
@@ -16,11 +11,9 @@ Review container package decisions without building or running untrusted images.
 5. If migration is needed, use `compare_distro_releases` or `plan_distro_migration` before proposing a new base.
 6. Report findings by severity with file/line, evidence, impact, minimal fix, and verification step.
 
-## Review Rules
+## Review rules
 
 - Flag EOL bases, floating release tags, unverified remote scripts, disabled signature checks, cache retention, secret leakage, and runtime build toolchains.
 - Do not claim a container is vulnerability-free from package version strings alone.
 - Prefer vendor-supported repositories and digest pinning where operationally appropriate.
 - Do not run `docker build`, execute image entrypoints, or fetch remote scripts unless the user explicitly authorizes it.
-
-Use `https://api.pkgseek.com` as a REST fallback only when PkgSeek MCP is unavailable.

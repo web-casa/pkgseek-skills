@@ -1,8 +1,3 @@
----
-name: debug-elf-abi
-description: Diagnose Linux ELF, shared-library, loader, symbol-version, undefined-reference, and ABI compatibility failures. Use for missing .so files, GLIBC or GLIBCXX requirements, dynamic loader errors, cross-distro binaries, and native build troubleshooting.
----
-
 # Debug ELF and ABI
 
 Identify the missing artifact and separate link-time, load-time, and symbol-version failures.
@@ -21,5 +16,3 @@ Identify the missing artifact and separate link-time, load-time, and symbol-vers
 - Do not use `LD_LIBRARY_PATH` as a universal fix; explain its process-wide risk.
 - Check architecture and libc family before comparing versions.
 - Treat symbol ownership and first-version claims as evidence-dependent; say when PkgSeek lacks an indexed symbol fact.
-
-Use `https://api.pkgseek.com` as a REST fallback only when PkgSeek MCP is unavailable.

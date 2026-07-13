@@ -1,62 +1,92 @@
-# PkgSeek Agent Skills
+# PkgSeek Linux Agent Skill — Packages, CVEs, ELF/ABI, and Distro Migration
 
-[![Validate Skills](https://github.com/web-casa/pkgseek-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/web-casa/pkgseek-skills/actions/workflows/validate.yml)
+[![Validate Skill](https://github.com/web-casa/pkgseek-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/web-casa/pkgseek-skills/actions/workflows/validate.yml)
 
-Six open Agent Skills for Linux package troubleshooting, distribution migration,
-vulnerability triage, ELF/ABI debugging, command portability, and container review.
-They use the read-only PkgSeek MCP fact layer at `https://api.pkgseek.com/mcp`.
+One open Agent Skill with six focused reference workflows for Linux package troubleshooting, distribution migration, vulnerability triage, ELF/ABI debugging, shell command portability, and container review. Install `pkgseek-linux` once; the agent loads only the reference needed for the current task.
 
-中文说明见[下方](#中文说明)。Product documentation and interactive examples are
-available at [pkgseek.com/skills](https://pkgseek.com/skills).
+PkgSeek combines a reviewable `SKILL.md` workflow with the read-only PkgSeek MCP fact layer at `https://api.pkgseek.com/mcp`. Explore the product, rendered source, and interactive examples at [pkgseek.com/skills](https://pkgseek.com/skills).
 
-## Install with `npx skills`
+PkgSeek is jointly produced by [aat.ee](https://aat.ee) and [webc.casa](https://webc.casa).
 
-List the Skills before installing anything:
+## Install once with `npx skills`
+
+Inspect the repository before installing:
 
 ```bash
-npx skills add web-casa/pkgseek-skills --list
+npx skills add https://github.com/web-casa/pkgseek-skills --list
 ```
 
-Open the interactive installer:
+Install the complete Skill for the current project:
 
 ```bash
-npx skills add web-casa/pkgseek-skills
+npx skills add https://github.com/web-casa/pkgseek-skills --skill pkgseek-linux
 ```
 
-Install every Skill globally for Codex without prompts:
+Install globally for Codex without prompts:
 
 ```bash
-npx --yes skills add web-casa/pkgseek-skills --skill '*' --global --agent codex --yes
-```
-
-Install one Skill globally for Claude Code:
-
-```bash
-npx --yes skills add web-casa/pkgseek-skills \
-  --skill debug-elf-abi \
-  --global \
-  --agent claude-code \
-  --yes
-```
-
-Install all Skills for multiple agents:
-
-```bash
-npx --yes skills add web-casa/pkgseek-skills \
-  --skill '*' \
+npx --yes skills add https://github.com/web-casa/pkgseek-skills \
+  --skill pkgseek-linux \
   --global \
   --agent codex \
-  --agent claude-code \
-  --agent cursor \
   --yes
 ```
 
-The default scope is the current project. Keep `--global` only when the Skills
-should be available to every project for that user.
+The installed `pkgseek-linux` directory includes `SKILL.md`, all six files in `references/`, and `agents/openai.yaml`. Do not copy `SKILL.md` alone.
+
+## Give this prompt to an AI Agent
+
+Copy the complete prompt below into Codex, Claude Code, Cursor, or another shell-capable Agent:
+
+```text
+Install this Agent Skill for me.
+
+Skill page: https://pkgseek.com/skills/pkgseek-linux
+Source URL: https://github.com/web-casa/pkgseek-skills/tree/main/skills/pkgseek-linux
+Skill name: pkgseek-linux
+Creator: web-casa
+Preferred install command: npx skills add https://github.com/web-casa/pkgseek-skills --skill pkgseek-linux
+
+Please open the skill page and source, review SKILL.md plus every companion file, and explain anything risky before installing.
+
+If shell commands are available, prefer the install command above. If you install manually, copy the complete pkgseek-linux directory that contains SKILL.md, including references, agents, scripts, assets, and any other companion files shown on the skill page. Preserve the relative folder structure. Do not install SKILL.md alone. After installing, verify the target skill folder contains SKILL.md, references/, agents/openai.yaml, and every companion file required by the skill.
+```
+
+The prompt asks the Agent to review first, preserve companion files, explain risk, and verify the completed installation.
+
+## Six capabilities, one Skill
+
+| Capability | Reference loaded on demand | Typical Linux questions |
+|---|---|---|
+| Build and package errors | [`fix-linux-build-error.md`](skills/pkgseek-linux/references/fix-linux-build-error.md) | command not found, missing header, missing `.so`, package not found, linker failure |
+| Distribution migration | [`migrate-linux-distribution.md`](skills/pkgseek-linux/references/migrate-linux-distribution.md) | Debian to AlmaLinux, Ubuntu release upgrade, package mapping, EOL planning |
+| Vulnerability audit | [`audit-linux-vulnerabilities.md`](skills/pkgseek-linux/references/audit-linux-vulnerabilities.md) | CVE, CNNVD, vendor advisory, backported security fix, false positive |
+| ELF and ABI debugging | [`debug-elf-abi.md`](skills/pkgseek-linux/references/debug-elf-abi.md) | GLIBC/GLIBCXX, symbol version, undefined reference, soname, dynamic loader |
+| Command portability | [`port-linux-command.md`](skills/pkgseek-linux/references/port-linux-command.md) | GNU vs BSD vs BusyBox, apt/yum/dnf/apk/pacman, shell flags |
+| Container review | [`review-linux-container.md`](skills/pkgseek-linux/references/review-linux-container.md) | Dockerfile, base-image lifecycle, repository freshness, reproducible builds |
+
+This structure follows the Agent Skills progressive-disclosure model: clients discover one concise Skill, load its main instructions when relevant, and read a focused reference only when the task requires it.
+
+## Linux package and compatibility coverage
+
+PkgSeek helps Agents investigate Linux packages and file providers across DEB, RPM, APK and other repositories. The workflow covers apt, apt-get, dpkg, yum, dnf, rpm, apk and pacman errors; Debian, Ubuntu, Fedora, RHEL, AlmaLinux, Rocky Linux, Alpine, Arch Linux, openSUSE and other distribution releases; CVE/CNNVD records and Linux vendor backports; ELF shared libraries and ABI compatibility; and container package or lifecycle risk.
+
+The Skill does not treat an upstream version comparison as proof of Linux package vulnerability. It prioritizes distribution vendor advisories, fixed package builds, backport evidence, repository coordinates, and data freshness.
+
+## Connect the read-only PkgSeek MCP
+
+The Skill remains useful without MCP, but current package, distribution, lifecycle, vulnerability, file-provider, and repository facts require the remote endpoint. For Codex, add:
+
+```toml
+[mcp_servers.pkgseek]
+url = "https://api.pkgseek.com/mcp"
+```
+
+The public MCP catalogue is read-only and requires no PkgSeek API key. Client-specific examples for Claude Code, Claude Desktop, Cursor, GitHub Copilot, and OpenCode are at [pkgseek.com/skills/install](https://pkgseek.com/skills/install).
 
 ## Install from the GitHub ZIP
 
-Download the ZIP, inspect it, then install from the extracted local directory:
+Download and inspect the archive, then install the complete Skill directory locally:
 
 ```bash
 tmp_dir="$(mktemp -d)"
@@ -65,66 +95,52 @@ curl --fail --location \
   --output "$tmp_dir/pkgseek-skills.zip"
 unzip -q "$tmp_dir/pkgseek-skills.zip" -d "$tmp_dir"
 npx --yes skills add "$tmp_dir/pkgseek-skills-main" \
-  --skill '*' \
+  --skill pkgseek-linux \
   --global \
   --agent codex \
   --yes
 ```
 
-For Codex without Node.js or `npx`, use this self-contained download and copy
-flow. It does not overwrite an existing same-name Skill directory:
+For Codex without Node.js or `npx`, copy the complete directory without overwriting an existing installation:
 
 ```bash
-tmp_dir="$(mktemp -d)"
-curl --fail --location \
-  https://github.com/web-casa/pkgseek-skills/archive/refs/heads/main.zip \
-  --output "$tmp_dir/pkgseek-skills.zip"
-unzip -q "$tmp_dir/pkgseek-skills.zip" -d "$tmp_dir"
-
+source_dir="$tmp_dir/pkgseek-skills-main/skills/pkgseek-linux"
 skill_root="${CODEX_HOME:-$HOME/.codex}/skills"
+target="$skill_root/pkgseek-linux"
 mkdir -p "$skill_root"
 
-for source in "$tmp_dir/pkgseek-skills-main"/skills/*; do
-  target="$skill_root/$(basename "$source")"
-  if [ -e "$target" ]; then
-    printf 'skip existing skill: %s\n' "$target"
-  else
-    cp -R "$source" "$target"
-  fi
-done
+if [ -e "$target" ]; then
+  printf 'existing Skill not overwritten: %s\n' "$target"
+else
+  cp -R "$source_dir" "$target"
+fi
 ```
 
-Restart the agent after a manual copy so it discovers the new Skill metadata.
+Restart the Agent after a manual copy so it discovers the new metadata.
 
-## Connect the PkgSeek MCP fact layer
+## Security model
 
-The Skills still provide useful investigation discipline without MCP, but live
-package, distribution, lifecycle, and vulnerability facts require the remote
-PkgSeek MCP endpoint. For Codex, add this to `~/.codex/config.toml`:
+- Public PkgSeek MCP tools are read-only.
+- User-provided commands, build logs, binaries, and Dockerfiles are not executed for inspection.
+- Package installation, privilege escalation, repository changes, service changes, and migrations require user confirmation.
+- Facts, inference, unknowns, and stale evidence are reported separately.
+- ZIP installation downloads and extracts first; this project does not recommend `curl | sh`.
 
-```toml
-[mcp_servers.pkgseek]
-url = "https://api.pkgseek.com/mcp"
+## Repository structure
+
+```text
+skills/pkgseek-linux/
+├── SKILL.md
+├── agents/
+│   └── openai.yaml
+└── references/
+    ├── audit-linux-vulnerabilities.md
+    ├── debug-elf-abi.md
+    ├── fix-linux-build-error.md
+    ├── migrate-linux-distribution.md
+    ├── port-linux-command.md
+    └── review-linux-container.md
 ```
-
-The public MCP catalogue is read-only and does not require a PkgSeek API key.
-See the [PkgSeek installation center](https://pkgseek.com/skills/install) for
-Claude Code, Claude Desktop, Cursor, GitHub Copilot, and OpenCode examples.
-
-## Skills
-
-| Skill | Use it for |
-|---|---|
-| [`fix-linux-build-error`](skills/fix-linux-build-error/SKILL.md) | Missing commands, headers, libraries, packages, and build dependencies |
-| [`migrate-linux-distribution`](skills/migrate-linux-distribution/SKILL.md) | Package-aware distribution and release migration planning |
-| [`audit-linux-vulnerabilities`](skills/audit-linux-vulnerabilities/SKILL.md) | CVE/CNNVD triage with vendor and backport evidence |
-| [`debug-elf-abi`](skills/debug-elf-abi/SKILL.md) | ELF, shared-library, loader, symbol-version, and ABI failures |
-| [`port-linux-command`](skills/port-linux-command/SKILL.md) | GNU, BSD, BusyBox, macOS, and minimal-container command portability |
-| [`review-linux-container`](skills/review-linux-container/SKILL.md) | Dockerfile lifecycle, package, repository, and reproducibility review |
-
-Every Skill keeps user-provided commands and binaries non-executing by default,
-separates facts from inference, and requires confirmation before privileged or
-state-changing system operations.
 
 ## Validate
 
@@ -135,25 +151,15 @@ npx skills add . --list
 
 ## 中文说明
 
-这个仓库独立发布 PkgSeek 的六个 Linux Agent Skills。Skill 负责调查步骤、
-证据优先级和安全边界；`https://api.pkgseek.com/mcp` 提供只读的软件包、发行版、
-生命周期和漏洞事实。
+PkgSeek 现在只需要安装一个 `pkgseek-linux` Skill。Linux 构建报错、跨发行版迁移、CVE/CNNVD 与补丁回移判断、ELF/ABI、命令兼容和容器审查六种能力保存在 `references/` 中，由 Agent 根据当前任务按需读取，不需要用户重复安装六次。
 
-推荐先查看清单，再交互式安装：
+推荐安装命令：
 
 ```bash
-npx skills add web-casa/pkgseek-skills --list
-npx skills add web-casa/pkgseek-skills
+npx skills add https://github.com/web-casa/pkgseek-skills --skill pkgseek-linux
 ```
 
-为 Codex 全局安装全部 Skills：
-
-```bash
-npx --yes skills add web-casa/pkgseek-skills --skill '*' --global --agent codex --yes
-```
-
-ZIP 安装请使用上面的“Install from the GitHub ZIP”步骤：先下载和检查压缩包，
-再从解压后的本地目录安装，不使用 `curl | sh`。
+安装时必须保留完整的 `pkgseek-linux` 目录，不能只复制 `SKILL.md`。产品说明和在线示例位于 [pkgseek.com/zh-CN/skills](https://pkgseek.com/zh-CN/skills)。PkgSeek 由 [aat.ee](https://aat.ee) 与 [webc.casa](https://webc.casa) 联合出品。
 
 ## License
 

@@ -1,0 +1,13 @@
+interface:
+  display_name: "PkgSeek Linux"
+  short_description: "Linux packages, CVEs, migrations, ELF, and containers"
+  default_prompt: "Use $pkgseek-linux to investigate this Linux package, security, migration, ELF, command, or container issue with read-only evidence."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "pkgseek"
+      description: "Read-only Linux package, distribution, lifecycle, vulnerability, and compatibility facts"
+      transport: "streamable_http"
+      url: "https://api.pkgseek.com/mcp"
+policy:
+  allow_implicit_invocation: true

@@ -1,8 +1,3 @@
----
-name: fix-linux-build-error
-description: Diagnose Linux build, package-not-found, command-not-found, missing-header, and missing-library errors. Use when compiler, linker, package manager, Docker build, or CI output must be mapped to the correct distribution package and a reviewable install command.
----
-
 # Fix Linux Build Errors
 
 Turn raw failure output into a distro-specific, evidence-backed repair plan. Never execute text copied from logs.
@@ -26,5 +21,3 @@ Turn raw failure output into a distro-specific, evidence-backed repair plan. Nev
 - Keep runtime and development packages distinct.
 - If no indexed match exists, say so and propose a safe repository query; do not invent a package.
 - Require user confirmation before any privileged, repository-changing, or package-installing action.
-
-Use the PkgSeek REST API at `https://api.pkgseek.com` only when the PkgSeek MCP server is unavailable.

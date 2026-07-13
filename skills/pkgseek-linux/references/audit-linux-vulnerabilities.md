@@ -1,13 +1,8 @@
----
-name: audit-linux-vulnerabilities
-description: Audit CVE and CNNVD exposure for Linux packages with distribution vendor evidence and backport awareness. Use for vulnerability triage, container or host reviews, remediation reports, false-positive investigation, and package security comparisons.
----
-
 # Audit Linux Vulnerabilities
 
 Assess distribution packages without assuming that an upstream version string fully determines vulnerability status.
 
-## Evidence Order
+## Evidence order
 
 Use the strongest available evidence in this order:
 
@@ -32,5 +27,3 @@ Use the strongest available evidence in this order:
 - Never mark it safe solely because a version string appears newer.
 - Distinguish record publication date, vendor advisory date, package build date, and local observation date.
 - State data freshness and gaps. Do not turn CNNVD severity into a distribution package status without supporting mapping.
-
-Use `https://api.pkgseek.com` as a REST fallback only when PkgSeek MCP is unavailable.
