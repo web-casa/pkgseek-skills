@@ -26,13 +26,13 @@ npx skills add web-casa/pkgseek-skills
 Install every Skill globally for Codex without prompts:
 
 ```bash
-npx skills add web-casa/pkgseek-skills --skill '*' --global --agent codex --yes
+npx --yes skills add web-casa/pkgseek-skills --skill '*' --global --agent codex --yes
 ```
 
 Install one Skill globally for Claude Code:
 
 ```bash
-npx skills add web-casa/pkgseek-skills \
+npx --yes skills add web-casa/pkgseek-skills \
   --skill debug-elf-abi \
   --global \
   --agent claude-code \
@@ -42,7 +42,7 @@ npx skills add web-casa/pkgseek-skills \
 Install all Skills for multiple agents:
 
 ```bash
-npx skills add web-casa/pkgseek-skills \
+npx --yes skills add web-casa/pkgseek-skills \
   --skill '*' \
   --global \
   --agent codex \
@@ -64,7 +64,7 @@ curl --fail --location \
   https://github.com/web-casa/pkgseek-skills/archive/refs/heads/main.zip \
   --output "$tmp_dir/pkgseek-skills.zip"
 unzip -q "$tmp_dir/pkgseek-skills.zip" -d "$tmp_dir"
-npx skills add "$tmp_dir/pkgseek-skills-main" \
+npx --yes skills add "$tmp_dir/pkgseek-skills-main" \
   --skill '*' \
   --global \
   --agent codex \
@@ -149,7 +149,7 @@ npx skills add web-casa/pkgseek-skills
 为 Codex 全局安装全部 Skills：
 
 ```bash
-npx skills add web-casa/pkgseek-skills --skill '*' --global --agent codex --yes
+npx --yes skills add web-casa/pkgseek-skills --skill '*' --global --agent codex --yes
 ```
 
 ZIP 安装请使用上面的“Install from the GitHub ZIP”步骤：先下载和检查压缩包，
