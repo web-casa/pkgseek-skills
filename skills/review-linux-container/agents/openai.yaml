@@ -1,0 +1,11 @@
+interface:
+  display_name: "Review Linux Containers"
+  short_description: "Review container lifecycle and package risks"
+  default_prompt: "Use $review-linux-container to review this container build for Linux package risks."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "pkgseek"
+      description: "PkgSeek Linux package and distribution intelligence"
+      transport: "streamable_http"
+      url: "https://api.pkgseek.com/mcp"

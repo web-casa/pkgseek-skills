@@ -1,0 +1,11 @@
+interface:
+  display_name: "Port Linux Commands"
+  short_description: "Port shell commands across Linux environments"
+  default_prompt: "Use $port-linux-command to port this command to the target Linux environment."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "pkgseek"
+      description: "PkgSeek Linux package and distribution intelligence"
+      transport: "streamable_http"
+      url: "https://api.pkgseek.com/mcp"
